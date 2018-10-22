@@ -8,6 +8,24 @@ class Question extends Component {
     }
   }
   
+
+  componentDidMount(){
+    const answersID = this.props.answersID;
+
+
+    const url = "http://localhost:3000/questions/" + answersID;
+        fetch(url)
+          .then( respuesta => respuesta.json())
+          .then( question =>  {
+            this.setState({
+              question: question.title,
+            })
+          })
+          .catch();        
+          //console.log(this.state.data);
+
+  }
+
   render() {
     const {question} = this.state;
     return (

@@ -31,14 +31,14 @@ class App extends Component {
 componentDidMount(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      console.log(JSON.stringify(user));
+      //console.log(JSON.stringify(user));
       store.update({
         logged: true,
         username: user.displayName,
         email: user.email,
         profilepic: user.photoURL,
       });
-      console.log(store.getState())
+     // console.log(store.getState())
     } else {
       // No user is signed in.
       store.update({logged: false})

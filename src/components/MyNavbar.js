@@ -19,7 +19,8 @@ class MyNavbar extends Component {
 
     </Nav>
     <Nav> 
-      <Nav.Link href="/add" className="text-white">{store.getState().logged ? ("Add") : ("")}</Nav.Link>
+      <Nav.Link href="/scoreboard" className="text-white">Scoreboard</Nav.Link>
+      <Nav.Link href="/add" className="text-white">{store.getState().logged ? ("Add Questions") : ("")}</Nav.Link>
       <Nav.Link href="/login" className="text-white">{store.getState().logged ? (<img className="navbarprofilepic" src={store.getState().profilepic} alt={store.getState().username} />) : ("Login")}</Nav.Link>
     </Nav>
   </Navbar>

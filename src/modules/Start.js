@@ -8,8 +8,8 @@ class Start extends Component {
     return (
       <div className="Start">
         <Timer />
-        <Question />
-        <MultipleChoice />
+        <Question answersID="2" />
+        <MultipleChoice answersID="2" />
       </div>
     );
   }

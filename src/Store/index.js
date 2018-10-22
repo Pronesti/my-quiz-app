@@ -5,7 +5,7 @@ const store = createStore({
   username: '',
   email: '',
   profilepic: '',
-  currentScore: '',
+  currentScore: 0,
   highScore: '',
   currentQuestion: {}
   })
