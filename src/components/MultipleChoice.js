@@ -9,6 +9,7 @@ class MultipleChoice extends Component {
     super(props);
 
     this.state = {
+      answerID: '',
       data: '',
       answer1: '1',
       answer2: '2',
@@ -20,13 +21,27 @@ class MultipleChoice extends Component {
       d_3: false,
       d_4: false,
     }
+
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    return true;
+}
+
+
   componentDidMount(){
+    this.setState({answerID: this.props.answersID});
 
-    const answersID = this.props.answersID;
+    this.setTimeout(() => {
+      console.log('I do not leak!');
+    }, 500);
 
-    const url = "http://localhost:3000/questions/" + answersID;
+    const url = "http://localhost:3000/questions/" + this.state.answersID;
+
+
+    console.log(url);
+
+
         fetch(url)
           .then( respuesta => respuesta.json())
           .then( question =>  {
@@ -40,13 +55,9 @@ class MultipleChoice extends Component {
                   });
           })
           .catch();        
-          //console.log(this.state.data);    
+          console.log(this.state);    
   }
 
-  componentDidUpdate(){
-    
-  }
-  
 checkAnswer(e){
 
   const {d_1, d_2, d_3, d_4} = this.state;
@@ -55,6 +66,7 @@ checkAnswer(e){
     store.update(s => {s.currentScore++});
     console.log("Actual Score: " + store.getState().currentScore);
     //NextQuestion
+    this.setState({d_1: true,d_2: true,d_3: true,d_4: true});
   }else{
     //Wrong Answer
     store.update(s => {s.currentScore--});
