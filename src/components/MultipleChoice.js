@@ -9,7 +9,6 @@ class MultipleChoice extends Component {
     super(props);
 
     this.state = {
-      answerID: '',
       data: '',
       answer1: '1',
       answer2: '2',
@@ -24,43 +23,31 @@ class MultipleChoice extends Component {
 
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    return true;
-}
-
 
   componentDidMount(){
-    this.setState({answerID: this.props.answersID});
+    this.fetchAnswers(this.props.answersID);
+  }
 
-    this.setTimeout(() => {
-      console.log('I do not leak!');
-    }, 500);
-
-    const url = "http://localhost:3000/questions/" + this.state.answersID;
-
-
+  fetchAnswers(id){
+    const url = "http://localhost:3000/questions/" + id;
     console.log(url);
+    fetch(url)
+    .then( respuesta => respuesta.json())
+    .then( question =>  {
+      this.setState({data: question});
+      this.setState({
+        answer1: this.state.data.answer1,
+        answer2: this.state.data.answer2,
+        answer3: this.state.data.answer3,
+        answer4: this.state.data.answer4,
+        correctAnswer: this.state.data.correctAnswer,
+            });
+    })
+    .catch();        
 
-
-        fetch(url)
-          .then( respuesta => respuesta.json())
-          .then( question =>  {
-            this.setState({data: question});
-            this.setState({
-              answer1: this.state.data.answer1,
-              answer2: this.state.data.answer2,
-              answer3: this.state.data.answer3,
-              answer4: this.state.data.answer4,
-              correctAnswer: this.state.data.correctAnswer,
-                  });
-          })
-          .catch();        
-          console.log(this.state);    
   }
 
 checkAnswer(e){
-
-  const {d_1, d_2, d_3, d_4} = this.state;
 
   if (this.state.correctAnswer === e.target.name){
     store.update(s => {s.currentScore++});
