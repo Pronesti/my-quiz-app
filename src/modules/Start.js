@@ -29,10 +29,9 @@ class Start extends Component {
         <Timer />
         <Question answersID={question} />
         <MultipleChoice answersID={question} />
-        <Button onClick={() => this.nextQuestion()}> Next </Button>
         <Date answersID={question}/>
-
-        {console.log(this.state)}
+        
+        <Button onClick={() => this.nextQuestion()}> Next </Button>
       </div>
     );
   }

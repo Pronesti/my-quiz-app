@@ -4,15 +4,15 @@ import * as PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import store from '../Store'
 import {DatePicker} from '@blueprintjs/datetime'
+import * as firebase from 'firebase';
 
 class Date extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      data: '',
-      answer: '1',
-      correctAnswer: '2',
+      correctAnswer: 0,
+      answer: 0,
     }
 
   }
@@ -23,23 +23,23 @@ class Date extends Component {
   }
 
   fetchAnswers(id){
-    const url = "http://localhost:3000/questions/" + id;
-    console.log(url);
-    fetch(url)
-    .then( respuesta => respuesta.json())
-    .then( question =>  {
-      this.setState({data: question});
+    var selectedQuestion;
+
+    const dbRefObject = firebase.database().ref().child('questions').child('dates').child(id);
+    dbRefObject.on('value', snap => { 
+      selectedQuestion = snap.val();
+
       this.setState({
-        correctAnswer: this.state.data.correctAnswer,
-            });
-    })
-    .catch();        
+        correctAnswer: selectedQuestion.correctAnswer,
+      })
+   });
+
 
   }
 
 checkAnswer(e){
-
-  if (this.state.correctAnswer === this.state.answer){
+  console.log(this.state);
+  if (this.state.correctAnswer == this.state.answer){
     store.update(s => {s.currentScore++});
     console.log("Actual Score: " + store.getState().currentScore);
     //NextQuestion
@@ -47,10 +47,11 @@ checkAnswer(e){
   }else{
     //Wrong Answer
     store.update(s => {s.currentScore--})
+    console.log("Actual Score: " + store.getState().currentScore);
     }
   }
 
- handleChange(date: Date) {
+ handleChange(date) {
         this.setState({ selectedDate: date });
     }
 

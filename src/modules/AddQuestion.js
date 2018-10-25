@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import {Button, Form, Row, Col, Card } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import * as firebase from 'firebase';
 
 class AddQuestion extends Component {
   constructor(props){
@@ -14,51 +15,80 @@ class AddQuestion extends Component {
       answer3: '',
       answer4: '',
       correctAnswer: '',
+      dates: true,
+      multiplechoice: false,
+      newID: 0,
     }
   }
 
+  componentDidMount(){
+    
+  }
 
-addQuestion(){
-  let questionToAdd = {
-      type: 'multiplechoice',
-      title: this.state.question,
+
+
+addQuestionDates(){
+
+  const {newID} = this.state;
+
+  const dbRefObject = firebase.database().ref().child('questions').child('dates');
+  dbRefObject.on('value', snap => { 
+    this.setState({newID: snap.val().count});
+    console.log(this.state.newID);
+  });
+
+    firebase.database().ref('questions/dates/' + newID).set({
+      question: this.state.question,
+      correctAnswer: this.state.correctAnswer,
+  }, function(error){
+    console.log(error);
+  });
+
+  firebase.database().ref('questions/dates/').set({
+    count: newID+1,
+}, function(error){
+  console.log(error);
+});
+  }
+
+addQuestionMC(){
+
+  const {newID} = this.state;
+
+  const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices');
+  dbRefObject.on('value', snap => { 
+   var entry = snap.val();
+    this.setState({newID: entry.count});
+    console.log("el ID es: " + this.state.newID);
+  });
+
+    firebase.database().ref('questions/multiplechoices/'+ newID).set({
+      question: this.state.question,
       correctAnswer: this.state.correctAnswer,
       answer1: this.state.answer1,
       answer2: this.state.answer2,
       answer3: this.state.answer3,
       answer4: this.state.answer4,
-      
-  };
+  }, function(error){
+    console.log(error);
+  });
 
-  fetch('http://localhost:3000/questions', { // URL: https://server-subscripcion-jsbrbnwqfv.now.sh/subscripciones
-  method: 'post',
-  headers: {
-    "Content-type": "application/json"
-  },
-  body: JSON.stringify(questionToAdd, '\t')
-})
-.then(JSON.stringify(questionToAdd, '\t'))
-.then(function (data) {
-  console.log('Request succeeded with JSON response', data);
-})
-.catch(function (error) {
-  console.log('Request failed', error);
+  firebase.database().ref('questions/multiplechoices/').set({
+    count: newID+1,
 });
-
 }
+
 
 handleChange(e){
   this.setState({
       [e.target.name]: e.target.value
   });
- // console.log(this.state);
 }
 
-  render() {
-    return (
-      <div className="AddQuestion">
-        <Card className="formulario">
-        <Form>
+
+showMultipleChoice(){
+  return (
+    <Form>
         <Form.Group>
         <Form.Label>Question</Form.Label>
         <Form.Control type="text" placeholder="Enter question" name="question" onChange={e => this.handleChange(e)} />
@@ -81,8 +111,39 @@ handleChange(e){
         </Form.Control>
   </Form.Group>
         </Form.Group>
+        <Button variant="warning" onClick={() => this.addQuestionMC()} > Add Multiple Choice</Button>
         </Form>
-        <Button variant="warning" onClick={() => this.addQuestion()} > Add </Button>
+        
+  );
+}
+
+showDates(){
+  return (
+  <Form>
+        <Form.Group>
+        <Form.Label>Question</Form.Label>
+        <Form.Control type="text" placeholder="Enter question" name="question" onChange={e => this.handleChange(e)} />
+        </Form.Group>
+        <Form.Group>
+        <Form.Label>Possible Answers</Form.Label>
+        <Form.Control type="text" placeholder="Enter answer" name="correctAnswer" onChange={e => this.handleChange(e)} />
+        </Form.Group>
+        <Button variant="warning" onClick={() => this.addQuestionDates()} > Add </Button>
+        </Form>
+        
+        );
+}
+
+  render() {
+    return (
+      <div className="AddQuestion">
+
+        <Card className="formulario question">
+        {this.showDates()}      
+        </Card>
+        
+        <Card className="formulario question2">
+        {this.showMultipleChoice()}      
         </Card>
 
       </div>

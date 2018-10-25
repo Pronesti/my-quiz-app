@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 
 class Question extends Component {
   constructor(props){
@@ -12,19 +13,17 @@ class Question extends Component {
   componentDidMount(){
     const answersID = this.props.answersID;
 
+    var selectedQuestion;
 
-    const url = "http://localhost:3000/questions/" + answersID;
-        fetch(url)
-          .then( respuesta => respuesta.json())
-          .then( question =>  {
-            this.setState({
-              question: question.title,
-            })
-          })
-          .catch();        
-          //console.log(this.state.data);
+    const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').child(answersID);
+    dbRefObject.on('value', snap => { 
+      selectedQuestion = snap.val();
 
-  }
+      this.setState({
+        question: selectedQuestion.question,
+      });
+
+  }); }
 
   render() {
     const {question} = this.state;

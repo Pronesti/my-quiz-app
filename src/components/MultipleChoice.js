@@ -3,6 +3,7 @@ import {Button, ButtonGroup} from 'react-bootstrap';
 import * as PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import store from '../Store'
+import * as firebase from 'firebase';
 
 class MultipleChoice extends Component {
   constructor(props){
@@ -29,21 +30,21 @@ class MultipleChoice extends Component {
   }
 
   fetchAnswers(id){
-    const url = "http://localhost:3000/questions/" + id;
-    console.log(url);
-    fetch(url)
-    .then( respuesta => respuesta.json())
-    .then( question =>  {
-      this.setState({data: question});
+var selectedQuestion;
+
+    const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').child(id);
+    dbRefObject.on('value', snap => { 
+      selectedQuestion = snap.val();
+
       this.setState({
-        answer1: this.state.data.answer1,
-        answer2: this.state.data.answer2,
-        answer3: this.state.data.answer3,
-        answer4: this.state.data.answer4,
-        correctAnswer: this.state.data.correctAnswer,
-            });
-    })
-    .catch();        
+        answer1: selectedQuestion.answer1,
+        answer2: selectedQuestion.answer2,
+        answer3: selectedQuestion.answer3,
+        answer4: selectedQuestion.answer4,
+        correctAnswer: selectedQuestion.correctAnswer,
+      })
+   });
+
 
   }
 
