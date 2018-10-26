@@ -6,7 +6,7 @@ import store from '../Store'
 import {DatePicker} from '@blueprintjs/datetime'
 import * as firebase from 'firebase';
 
-class Date extends Component {
+class Single extends Component {
   constructor(props){
     super(props);
 
@@ -25,7 +25,7 @@ class Date extends Component {
   fetchAnswers(id){
     var selectedQuestion;
 
-    const dbRefObject = firebase.database().ref().child('questions').child('dates').child(id);
+    const dbRefObject = firebase.database().ref().child('questions').child('singles').child(id);
     dbRefObject.on('value', snap => { 
       selectedQuestion = snap.val();
 
@@ -57,12 +57,12 @@ checkAnswer(e){
 
   render() {
     return (
-      <div className="Date">
+      <div className="Single">
             <Form.Control type="number" onChange={(e) => (this.setState({answer: e.target.value}))} />
-  <Button variant="outline-light" name="1" onClick={ e => this.checkAnswer(e)} size="sm">?</Button>
+  <Button variant="outline-light" name="1" onClick={ e => this.checkAnswer(e)} size="sm">Check</Button>
       </div>
     );
   }
 }
 
-export default Date;
+export default Single;

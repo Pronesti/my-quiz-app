@@ -15,7 +15,7 @@ class AddQuestion extends Component {
       answer3: '',
       answer4: '',
       correctAnswer: '',
-      dates: true,
+      singles: true,
       multiplechoice: false,
       newID: 0,
     }
@@ -27,24 +27,24 @@ class AddQuestion extends Component {
 
 
 
-addQuestionDates(){
+addQuestionSingles(){
 
   const {newID} = this.state;
 
-  const dbRefObject = firebase.database().ref().child('questions').child('dates');
+  const dbRefObject = firebase.database().ref().child('questions').child('singles');
   dbRefObject.on('value', snap => { 
     this.setState({newID: snap.val().count});
     console.log(this.state.newID);
   });
 
-    firebase.database().ref('questions/dates/' + newID).set({
+    firebase.database().ref('questions/singles/' + newID).set({
       question: this.state.question,
       correctAnswer: this.state.correctAnswer,
   }, function(error){
     console.log(error);
   });
 
-  firebase.database().ref('questions/dates/').set({
+  firebase.database().ref('questions/singles/').set({
     count: newID+1,
 }, function(error){
   console.log(error);
@@ -117,7 +117,7 @@ showMultipleChoice(){
   );
 }
 
-showDates(){
+showSingles(){
   return (
   <Form>
         <Form.Group>
@@ -128,7 +128,7 @@ showDates(){
         <Form.Label>Possible Answers</Form.Label>
         <Form.Control type="text" placeholder="Enter answer" name="correctAnswer" onChange={e => this.handleChange(e)} />
         </Form.Group>
-        <Button variant="warning" onClick={() => this.addQuestionDates()} > Add </Button>
+        <Button variant="warning" onClick={() => this.addQuestionSingles()} > Add </Button>
         </Form>
         
         );
@@ -139,7 +139,7 @@ showDates(){
       <div className="AddQuestion">
 
         <Card className="formulario question">
-        {this.showDates()}      
+        {this.showSingles()}      
         </Card>
         
         <Card className="formulario question2">

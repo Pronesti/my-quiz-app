@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MultipleChoice from '../components/MultipleChoice';
 import Question from '../components/Question';
 import Timer from '../components/Timer';
-import Date from '../components/Date';
+import Single from '../components/Single';
 
 import {Button} from 'react-bootstrap';
 import ScoreCount from '../components/ScoreCount';
@@ -13,7 +13,7 @@ class Start extends Component {
     super(props);
 
     this.state = {
-      question:1,
+      questions: [1,2,3,4,5,1,2,3,4,5],
     }
   }
 
@@ -21,30 +21,31 @@ class Start extends Component {
 
   }
 
-  nextQuestion(){
-    let num = this.state.question;
-    this.setState({question: num + 1});
-  }
-
-  renderQuestion(question){
-        return(
-          <div>
+  makeQuestion(question){
+    return(
+      <div className="question2">
           <Question answersID={question} />
           <MultipleChoice answersID={question} />
-          </div>);
+      </div>
+    );
   }
 
+finishQuiz(){
+  
+}
+
+
   render() {
-   const {question} = this.state;
     return (
       <div className="Start">
 
         <Timer />
         <ScoreCount />
 
-        {this.renderQuestion(question)}
-        
-        <Button onClick={() => this.nextQuestion()}> Next </Button>
+       {this.state.questions.map(question => this.makeQuestion(question))}
+
+        <p></p>
+        <Button variant="outline-danger" onClick={() => this.finishQuiz()}> Finish </Button>
       </div>
     );
   }
