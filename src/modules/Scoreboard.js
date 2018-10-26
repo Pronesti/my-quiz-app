@@ -32,7 +32,9 @@ class Scoreboard extends Component {
     for(let i=1; i < count+1 ;i++){
       const dbRefObject = firebase.database().ref().child('highscores').child(i);
       dbRefObject.on('value', snap => { 
-        scoreList[i] = snap.val();
+        var one = snap.val();
+        one.id = i;
+        scoreList[i] = one;
      });
     }
 
@@ -42,18 +44,22 @@ class Scoreboard extends Component {
   }
 
   makeCell(cell){
+    console.log(cell);
     return(<tr>
+      <td>{cell.id}</td>
       <td>{cell.name}</td>
       <td>{cell.score}</td>
       </tr>)
+      
   }
 
   render() {
     return (
       <div className="Scoreboard">
-<Table striped bordered hover>
+<Table striped bordered hover variant="dark">
   <thead>
     <tr>
+      <th>#</th>
       <th>Name</th>
       <th>Score</th>
     </tr>

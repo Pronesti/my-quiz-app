@@ -5,6 +5,7 @@ import Timer from '../components/Timer';
 import Date from '../components/Date';
 
 import {Button} from 'react-bootstrap';
+import ScoreCount from '../components/ScoreCount';
 
 
 class Start extends Component {
@@ -16,9 +17,21 @@ class Start extends Component {
     }
   }
 
+  componentDidMount(){
+
+  }
+
   nextQuestion(){
     let num = this.state.question;
     this.setState({question: num + 1});
+  }
+
+  renderQuestion(question){
+        return(
+          <div>
+          <Question answersID={question} />
+          <MultipleChoice answersID={question} />
+          </div>);
   }
 
   render() {
@@ -27,9 +40,9 @@ class Start extends Component {
       <div className="Start">
 
         <Timer />
-        <Question answersID={question} />
-        <MultipleChoice answersID={question} />
-        <Date answersID={question}/>
+        <ScoreCount />
+
+        {this.renderQuestion(question)}
         
         <Button onClick={() => this.nextQuestion()}> Next </Button>
       </div>

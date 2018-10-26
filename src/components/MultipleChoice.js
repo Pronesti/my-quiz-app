@@ -50,7 +50,7 @@ var selectedQuestion;
 
 checkAnswer(e){
 
-  if (this.state.correctAnswer === e.target.name){
+  if (this.state.correctAnswer == e.target.name){
     store.update(s => {s.currentScore++});
     console.log("Actual Score: " + store.getState().currentScore);
     //NextQuestion
