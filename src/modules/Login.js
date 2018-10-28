@@ -30,6 +30,12 @@ componentDidMount(){
        s.login.picture = user.photoURL;
       });
 
+      var ref = firebase.database().ref('highscores').child(store.getState().login.username);
+      ref.once('value').then(function(snapshot){
+        store.update(s =>  s.score.highScore = snapshot.val());
+      })
+      console.log(store.getState().score.highScore);
+
     } else {
       // No user is signed in.
       store.update(s => s.login.state = false);

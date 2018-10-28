@@ -59,7 +59,6 @@ class MultipleChoice extends Component {
 
 
     checkAnswer(e) {
-        console.log(store.getState());
         if (e.target.name == store.getState().currentQuestion.correctAnswer) {
             store.update(s => s.score.currentScore = s.score.currentScore + 10);
             this.setState({ d_1: true, d_2: true, d_3: true, d_4: true });
@@ -77,7 +76,7 @@ class MultipleChoice extends Component {
             store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
         }else
         {
-           this.setState({finished: true});
+           store.update(s => s.game.finished = true);
         }
     }
 
@@ -85,8 +84,8 @@ class MultipleChoice extends Component {
         const { title, answer1, answer2, answer3, answer4 } = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
         
-        if (store.getState().finished){
-            return (<Redirect to="/finish" />);          
+        if (store.getState().game.finished){
+            return (<Redirect to="/finish" />);
           }
 
         return (

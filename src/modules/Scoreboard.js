@@ -7,11 +7,8 @@ class Scoreboard extends Component {
     super(props);
     this.state ={
       arrayScores: [],
-      cellNumber:1,
     }
-
   }
-
 
   componentDidMount(){
     let arrayScores = [];
@@ -24,30 +21,9 @@ class Scoreboard extends Component {
       arrayScores.push(_user);
     })
   this.setState({arrayScores: arrayScores.reverse()});
-   console.log(this.state);
-
   });
-
   }
-
-  makeScoreList(){
-    var count = 2;
-
-    let scoreList = [];
-    for(let i=1; i < count+1 ;i++){
-      const dbRefObject = firebase.database().ref().child('highscores').child(i);
-      dbRefObject.on('value', snap => { 
-        var one = snap.val();
-        one.id = i;
-        scoreList[i] = one;
-     });
-    }
-
-    //console.log(scoreList);
-
-    return scoreList;
-  }
-
+  
   makeCell(){
     if (typeof this.state.arrayScores !=="undefined"){
      return (this.state.arrayScores.map((cell, index) => {
@@ -58,30 +34,29 @@ class Scoreboard extends Component {
           <td>{cell.score}</td>
         </tr>)
         }))
+    }  
+  }
+
+    render() {
+        return (
+            <div className="Scoreboard">
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {this.makeCell()}
+
+                    </tbody>
+                </Table>
+            </div>
+        );
     }
-    
-  }
-
-  render() {
-    return (
-      <div className="Scoreboard">
-<Table striped bordered hover variant="dark">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody>
-
-  {this.makeCell()} 
-
-  </tbody>
-</Table>
-      </div>
-    );
-  }
 }
 
 export default Scoreboard;

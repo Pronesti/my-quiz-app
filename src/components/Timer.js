@@ -18,11 +18,12 @@ showTimer(){
   // Renderer callback with condition
 const renderer = ({ hours, minutes, seconds, completed }) => {
   if (completed) {
-   this.noMoreTime();
-  } else {
-    // Render a countdown
+    this.noMoreTime();
     return <span>{hours}:{minutes}:{seconds}</span>;
-  }
+   } else {
+     // Render a countdown
+     return <span>{hours}:{minutes}:{seconds}</span>;
+   }
 };
 
 return(<Countdown
