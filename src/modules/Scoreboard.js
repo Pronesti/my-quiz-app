@@ -6,7 +6,7 @@ class Scoreboard extends Component {
   constructor(props){
     super(props);
     this.state ={
-      scores: [],
+      arrayScores: [],
       cellNumber:1,
     }
 
@@ -14,14 +14,19 @@ class Scoreboard extends Component {
 
 
   componentDidMount(){
-    let a;
+    let arrayScores = [];
    const dbRefObject = firebase.database().ref().child('highscores');
-   dbRefObject.on('value', snap => { 
-     a = JSON.stringify(snap.val(), null, 3)
-    // console.log(snap.val());
-    this.setState({scores: a})
+   dbRefObject.orderByValue().on('value', snap => { 
+    snap.forEach(function(childSnapshot){
+      var nombre = childSnapshot.key;
+      var score = childSnapshot.val();
+      var _user ={nombre: nombre,score: score};
+      arrayScores.push(_user);
+    })
+  this.setState({arrayScores: arrayScores.reverse()});
+   console.log(this.state);
+
   });
- //let b = this.makeScoreList();
 
   }
 
@@ -38,19 +43,23 @@ class Scoreboard extends Component {
      });
     }
 
-    console.log(scoreList);
+    //console.log(scoreList);
 
     return scoreList;
   }
 
-  makeCell(cell){
-    console.log(cell);
-    return(<tr>
-      <td>{cell.id}</td>
-      <td>{cell.name}</td>
-      <td>{cell.score}</td>
-      </tr>)
-      
+  makeCell(){
+    if (typeof this.state.arrayScores !=="undefined"){
+     return (this.state.arrayScores.map((cell, index) => {
+        return(
+        <tr>
+          <td>{index+1}</td>
+          <td>{cell.nombre}</td>
+          <td>{cell.score}</td>
+        </tr>)
+        }))
+    }
+    
   }
 
   render() {
@@ -65,7 +74,8 @@ class Scoreboard extends Component {
     </tr>
   </thead>
   <tbody>
-   {this.makeScoreList().map(cell => this.makeCell(cell))}
+
+  {this.makeCell()} 
 
   </tbody>
 </Table>
