@@ -3,16 +3,17 @@ Dynamic Quiz Game - Diego Pronesti Final Work
 ## Table of Contents
 
 - [Quiz System](#quiz-system)
-- [ToDo List](#todo-list)
+- [To Do List](#todo-list)
 
 
 ## Quiz System
 One correct answer of four possibles answers.
 
-+10points for each correct answer and -5 for each bad try
++10 points for each correct answer and -5 points for each bad try
 
-## Todo List
+## To do List
 
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] Open a pull request
+- [x] Interactive quiz system
+- [x] Scoreboard with High Scores
+- [x] Google Login
+- [ ] Upload new questions
