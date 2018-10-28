@@ -9,7 +9,8 @@ Dynamic Quiz Game - Diego Pronesti Final Work
 ## Quiz System
 One correct answer of four possibles answers.
 
-+10 points for each correct answer and -5 points for each bad try
+* +10 points for each correct answer
+* -5 points for each bad try
 
 ## To do List
 
