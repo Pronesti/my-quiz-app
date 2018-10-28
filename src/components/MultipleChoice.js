@@ -59,7 +59,7 @@ class MultipleChoice extends Component {
 
 
     checkAnswer(e) {
-        if (e.target.name == store.getState().currentQuestion.correctAnswer) {
+        if (Number(e.target.name) === store.getState().currentQuestion.correctAnswer) {
             store.update(s => s.score.currentScore = s.score.currentScore + 10);
             this.setState({ d_1: true, d_2: true, d_3: true, d_4: true });
         } else {
