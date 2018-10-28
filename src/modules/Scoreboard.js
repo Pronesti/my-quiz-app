@@ -21,7 +21,7 @@ class Scoreboard extends Component {
     // console.log(snap.val());
     this.setState({scores: a})
   });
- let b = this.makeScoreList();
+ //let b = this.makeScoreList();
 
   }
 

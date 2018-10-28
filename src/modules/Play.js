@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import store from '../Store'
+import store from '../store'
 
 class Play extends Component {
   render() {

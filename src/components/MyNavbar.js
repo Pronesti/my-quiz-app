@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import store from '../Store';
+import store from '../store';
 
 class MyNavbar extends Component {
   constructor(props){
@@ -20,8 +20,8 @@ class MyNavbar extends Component {
     </Nav>
     <Nav> 
       <Nav.Link href="/scoreboard" className="text-white">Scoreboard</Nav.Link>
-      <Nav.Link href="/add" className="text-white">{store.getState().logged ? ("Add Questions") : ("")}</Nav.Link>
-      <Nav.Link href="/login" className="text-white">{store.getState().logged ? (<img className="navbarprofilepic" src={store.getState().profilepic} alt={store.getState().username} />) : ("Login")}</Nav.Link>
+      <Nav.Link href="/add" className="text-white">{store.getState().login.state ? ("Add Questions") : ("")}</Nav.Link>
+      <Nav.Link href="/login" className="text-white">{store.getState().login.state ? (<img className="navbarprofilepic" src={store.getState().login.picture} alt={store.getState().login.username} />) : ("Login")}</Nav.Link>
     </Nav>
   </Navbar>
       </div>

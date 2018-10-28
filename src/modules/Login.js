@@ -3,7 +3,7 @@ import { Card,  Button } from 'react-bootstrap';
 import * as firebaseui from 'firebaseui';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-dom';
-import store from '../Store';
+import store from '../store';
 
 
 class Login extends Component {
@@ -23,15 +23,16 @@ componentDidMount(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       //console.log(JSON.stringify(user));
-      store.update({
-        logged: true,
-        username: user.displayName,
-        email: user.email,
-        profilepic: user.photoURL,
+      store.update(s => {
+       s.login.state = true;
+       s.login.username = user.displayName;
+       s.login.email = user.email;
+       s.login.picture = user.photoURL;
       });
+
     } else {
       // No user is signed in.
-      store.update({logged: false})
+      store.update(s => s.login.state = false);
     }
   }).bind(this);
 
@@ -112,10 +113,10 @@ render() {
     return (
       <div className="Login">
 <Card body className="text-center logginCard">
-        <Card.Title>{store.getState().logged ? ( <h3>{store.getState().username}</h3> ) : ("Login")}</Card.Title>
-        <Card.Text>{store.getState().logged ? ( <img className="logginPic" src={store.getState().profilepic} alt={store.getState().username} /> ) : (<p></p>)}</Card.Text>
-        {store.getState().logged ? ( this.loggoutButton() ) : ( this.logginButton() )} 
-       {store.getState().logged ? ( "High Score: " + store.getState().highScore ) : ( " " )}
+        <Card.Title>{store.getState().login.state ? ( <h3>{store.getState().login.username}</h3> ) : ("Login")}</Card.Title>
+        <Card.Text>{store.getState().login.state ? ( <img className="logginPic" src={store.getState().login.picture} alt={store.getState().login.username} /> ) : (<p></p>)}</Card.Text>
+        {store.getState().login.state ? ( this.loggoutButton() ) : ( this.logginButton() )} 
+       {store.getState().login.state ? ( "High Score: " + store.getState().score.highScore ) : ( " " )}
       </Card>
       <div>
           </div>

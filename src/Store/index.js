@@ -1,13 +1,25 @@
-import createStore from 'pure-store'
+import createStore from 'pure-store';
 
 const store = createStore({
-  logged: null,
-  username: '',
-  email: '',
-  profilepic: '',
-  currentScore: 0,
-  highScore: '',
-  currentQuestion: {}
-  })
+    login: {
+        state: null,
+        username: null,
+        email: null,
+        picture: null,
+    },
+    score: {
+        currentScore: 0,
+        highScore: 0,
+    },
+    currentQuestion: {
+        position: 1,
+        title: '',
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
+        correctAnswer: 0,
+    }
+})
 
-  export default store;
+export default store;

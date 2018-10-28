@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import {BrowserRouter as Router,Switch, Route } from 'react-router-dom';
 import firebase from 'firebase';
-import store from './Store'
 
+import store from './store';
 
 import Play from './modules/Play';
 import Start from './modules/Start';
@@ -14,9 +15,8 @@ import Scoreboard from './modules/Scoreboard';
 import MyNavbar from './components/MyNavbar';
 
 
-
- // Initialize Firebase
- var config = {
+// Initialize Firebase
+var config = {
   apiKey: "AIzaSyDR1JvHhCY87_b7IsyyIz8o0WzPaOg8aeo",
   authDomain: "my-quiz-app-dd.firebaseapp.com",
   databaseURL: "https://my-quiz-app-dd.firebaseio.com",
@@ -26,30 +26,31 @@ import MyNavbar from './components/MyNavbar';
 };
 firebase.initializeApp(config);
 
+
 class App extends Component {
 
-componentDidMount(){
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      //console.log(JSON.stringify(user));
-      store.update({
-        logged: true,
-        username: user.displayName,
-        email: user.email,
-        profilepic: user.photoURL,
-      });
-     // console.log(store.getState())
-    } else {
-      // No user is signed in.
-      store.update({logged: false})
-    }
-  }).bind(this);
-}
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        store.update({
+          login: {
+            state: true,
+            username: user.displayName,
+            email: user.email,
+            picture: user.photoURL,
+          }
+        });
+      } else {
+        // No user is signed in.
+        store.update({ login: { state: false } });
+      }
+    }).bind(this);
+  }
 
   render() {
     return (
       <div className="App">
-<Router>
+      <Router>
   <div>
 <MyNavbar />
 <Switch>
