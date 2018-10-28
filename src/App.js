@@ -9,8 +9,8 @@ import store from './store';
 import Play from './modules/Play';
 import Start from './modules/Start';
 import Login from './modules/Login';
-
 import AddQuestion from './modules/AddQuestion';
+import Finish from './modules/Finish';
 import Scoreboard from './modules/Scoreboard';
 
 import MyNavbar from './components/MyNavbar';
@@ -59,6 +59,7 @@ class App extends Component {
     <Route exact path="/start" component={Start}/>
     <Route exact path="/login" component={Login}/>
     <Route exact path="/add" component={AddQuestion}/>
+    <Route exact path="/finish" component={Finish}/>
     <Route exact path="/scoreboard" component={Scoreboard}/>
 </Switch>
 </div>

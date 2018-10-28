@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import store from '../store';
 import * as firebase from 'firebase';
+import {Redirect} from 'react-router-dom';
 
 class MultipleChoice extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class MultipleChoice extends Component {
             d_2: false,
             d_3: false,
             d_4: false,
+            finished: false,
         }
     }
 
@@ -75,13 +77,18 @@ class MultipleChoice extends Component {
             store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
         }else
         {
-            alert("Terminaste");
+           this.setState({finished: true});
         }
     }
 
     render() {
         const { title, answer1, answer2, answer3, answer4 } = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
+        
+        if (store.getState().finished){
+            return (<Redirect to="/finish" />);          
+          }
+
         return (
             <div className="MultipleChoice">
                 <h3>{title}</h3>
@@ -91,6 +98,7 @@ class MultipleChoice extends Component {
                     <Button name="3" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_3}>{answer3}</Button>
                     <Button name="4" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_4}>{answer4}</Button>
                 </ButtonGroup>
+                
             </div>
         );
     }

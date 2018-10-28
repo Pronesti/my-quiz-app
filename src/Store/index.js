@@ -19,7 +19,11 @@ const store = createStore({
         answer3: '',
         answer4: '',
         correctAnswer: 0,
-    }
+    },
+    game:{
+        finished:false,
+        timesup:false,
+    },
 })
 
 export default store;

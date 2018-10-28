@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import MultipleChoice from '../components/MultipleChoice';
 import Timer from '../components/Timer';
-
-import store from '../store';
+import Score from '../components/Score';
 
 
 
 class Start extends Component {
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount(){
 
@@ -27,7 +23,7 @@ finishQuiz(){
       <div className="Start">
 
         <Timer />
-
+<Score />
  <MultipleChoice />
 
         <p></p>

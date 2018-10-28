@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import store from '../store'
+import Score from '../components/Score';
 
 class Play extends Component {
   render() {
     return (
       <div className="Play">
-        <h3>My Quiz App</h3>
-          <img src={logo} className="App-logo" alt="logo" /> <br />
+      {store.getState().game.timesup ? (<p>You are out of time</p>) : ("")}
+            <Score />
           <div className="espaciologoboton"></div>
-          <Link to="/start"><Button variant="outline-light" size="sm"> Play </Button></Link>
+          <Link to="/scoreboard"><Button variant="outline-light" size="sm"> Show Scoreboard </Button></Link>
+          <p> {} </p>
       </div>
     );
   }

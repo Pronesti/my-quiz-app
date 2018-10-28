@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import  Countdown from 'react-countdown-now';
+import store from '../store';
 
 class Timer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            givenTime: 50000,
+            givenTime: 5000,
         }
       }
 
@@ -14,23 +15,25 @@ componentDidMount(){
 }
 
 showTimer(){
-    const Completionist = () => <span>You are good to go!</span>;
-
-    // Renderer callback with condition
+  // Renderer callback with condition
 const renderer = ({ hours, minutes, seconds, completed }) => {
-    if (completed) {
-      // Render a completed state
-      return <Completionist />;
-    } else {
-      // Render a countdown
-      return <span>{hours}:{minutes}:{seconds}</span>;
-    }
-  };
+  if (completed) {
+   this.noMoreTime();
+  } else {
+    // Render a countdown
+    return <span>{hours}:{minutes}:{seconds}</span>;
+  }
+};
 
-  return(<Countdown
-    date={Date.now() + this.state.givenTime}
-    renderer={renderer}
-  />);
+return(<Countdown
+  date={Date.now() + this.state.givenTime}
+  renderer={renderer}
+/>);
+}
+
+noMoreTime(){
+  store.update(s => s.game.finished = true);
+  store.update(s => s.game.timesup = true);
 }
 
   render() {
