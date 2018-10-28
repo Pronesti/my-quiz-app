@@ -17,7 +17,7 @@ componentDidMount(){
   render() {
     return (
       <div className="Score">
-        <h3>Score:{store.getState().score.currentScore}</h3>
+        <h3>Score: {store.getState().score.currentScore}</h3>
       </div>
     );
   }

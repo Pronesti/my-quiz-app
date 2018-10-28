@@ -74,5 +74,19 @@ padding: 1vw;
 display: inline-block;
 border-color: white;
 padding: 1vw;
-margin: 4vw;
+margin: 3vw;
+margin-top: -10vh;
+width: 80%;
+}
+
+.center-div
+{
+  position: absolute;
+  margin: auto;
+  top: 50vh;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

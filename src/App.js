@@ -54,6 +54,7 @@ class App extends Component {
       <Router>
   <div>
 <MyNavbar />
+<div className="center-div">
 <Switch>
     <Route exact path="/" component={Play}/>
     <Route exact path="/start" component={Start}/>
@@ -62,6 +63,7 @@ class App extends Component {
     <Route exact path="/finish" component={Finish}/>
     <Route exact path="/scoreboard" component={Scoreboard}/>
 </Switch>
+</div>
 </div>
 </Router>
       </div>

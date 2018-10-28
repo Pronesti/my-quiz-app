@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Row, Col, Container } from 'react-bootstrap';
 import store from '../store';
 import * as firebase from 'firebase';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class MultipleChoice extends Component {
     constructor(props) {
@@ -19,27 +19,27 @@ class MultipleChoice extends Component {
     }
 
     componentDidMount() { //DIDUPDATE = LOOP INFINITO, WILLUPDATE = Maximum update depth exceeded
-       this.fetchInfo();
-       console.log(this.state.position);
+        this.fetchInfo();
+        console.log(this.state.position);
     }
 
     componentDidUpdate() {
-        if (this.state.position !== store.getState().currentQuestion.position){
-        this.fetchInfo();
-        this.setState({
-            position: store.getState().currentQuestion.position,
-            d_1: false,
-            d_2: false,
-            d_3: false,
-            d_4: false,
-        });    
-        }    
+        if (this.state.position !== store.getState().currentQuestion.position) {
+            this.fetchInfo();
+            this.setState({
+                position: store.getState().currentQuestion.position,
+                d_1: false,
+                d_2: false,
+                d_3: false,
+                d_4: false,
+            });
+        }
 
-   }
+    }
 
 
 
-    fetchInfo(){
+    fetchInfo() {
         var selectedQuestion;
         const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').child(store.getState().currentQuestion.position);
         dbRefObject.on('value', snap => {
@@ -72,32 +72,48 @@ class MultipleChoice extends Component {
                 default: return console.log("Error");
             }
         }
-        if (store.getState().currentQuestion.position<5){
+        if (store.getState().currentQuestion.position < 5) {
             store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
-        }else
-        {
-           store.update(s => s.game.finished = true);
+        } else {
+            store.update(s => s.game.finished = true);
         }
     }
 
     render() {
         const { title, answer1, answer2, answer3, answer4 } = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
-        
-        if (store.getState().game.finished){
+
+        if (store.getState().game.finished) {
             return (<Redirect to="/finish" />);
-          }
+        }
 
         return (
             <div className="MultipleChoice">
-                <h3>{title}</h3>
-                <ButtonGroup vertical>
-                    <Button name="1" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_1}>{answer1}</Button>
-                    <Button name="2" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_2}>{answer2}</Button>
-                    <Button name="3" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_3}>{answer3}</Button>
-                    <Button name="4" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_4}>{answer4}</Button>
-                </ButtonGroup>
-                
+                <Container>
+                    <Row>
+                        <Col><h5>{title}</h5></Col>
+                    </Row>
+                    <Row></Row>
+                    <Row>
+                        <Col></Col>
+                        <Col></Col>
+                        <Col></Col>
+                    </Row>
+                    <Row>
+                        <Col></Col>
+                        <Col>
+                            <ButtonGroup vertical>
+                                <Button name="1" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_1}>{answer1}</Button>
+                                <Button name="2" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_2}>{answer2}</Button>
+                                <Button name="3" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_3}>{answer3}</Button>
+                                <Button name="4" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_4}>{answer4}</Button>
+                            </ButtonGroup></Col>
+                        <Col></Col>
+                    </Row>
+                </Container>
+
+
+
             </div>
         );
     }

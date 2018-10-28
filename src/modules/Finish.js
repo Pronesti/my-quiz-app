@@ -18,7 +18,7 @@ class Finish extends Component {
     );
   }
 
-  componentWillUnmount(){
+  componentWillUnmount(){ //on exit?
     store.update(s => {
       s.score.currentScore = 0;
       s.currentQuestion.position = 1;
