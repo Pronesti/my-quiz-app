@@ -75,7 +75,8 @@ class AddQuestion extends Component {
 
   async addQuestion() {
     const newID = await this.readCount();
-    await this.uploadQuestion(newID);
+    console.log(newID);
+    await this.uploadQuestion(newID).then();
     await this.updateCount(newID);
   }
 
