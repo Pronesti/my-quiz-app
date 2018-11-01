@@ -22,74 +22,11 @@ class AddQuestion extends Component {
   componentDidMount() {
   }
 
-  addQuestionSingles() {
 
-    const { newID } = this.state;
 
-    const dbRefObject = firebase.database().ref().child('questions').child('singles');
-    dbRefObject.on('value', snap => {
-      this.setState({ newID: snap.val().count });
-      console.log(this.state.newID);
-    });
-
-    firebase.database().ref('questions/singles/' + newID).set({
-      question: this.state.question,
-      correctAnswer: this.state.correctAnswer,
-    }, function (error) {
-      console.log(error);
-    });
-
-    firebase.database().ref('questions/singles/').set({
-      count: newID + 1,
-    }, function (error) {
-      console.log(error);
-    });
-  }
 
   addQuestionMC() {
-
-    const { newID } = this.state;
-
-    const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices');
-    dbRefObject.on('value', snap => {
-      var entry = snap.val();
-      this.setState({ newID: entry.count });
-      console.log("el ID es: " + this.state.newID);
-    });
-
-    firebase.database().ref('questions/multiplechoices/' + newID).set({
-      question: this.state.question,
-      correctAnswer: this.state.correctAnswer,
-      answer1: this.state.answer1,
-      answer2: this.state.answer2,
-      answer3: this.state.answer3,
-      answer4: this.state.answer4,
-    }, function (error) {
-      console.log(error);
-    });
-
-    firebase.database().ref('questions/multiplechoices/').set({
-      count: newID + 1,
-    });
-  }
-
-  async addQuestion() {
-    const newID = await this.readCount();
-    console.log(newID);
-    await this.uploadQuestion(newID).then();
-    await this.updateCount(newID);
-  }
-
-  async readCount() {
-    const ref = await firebase.database().ref('/questions/multiplechoices/count');
-    var _obj = await ref.once('value')
-    _obj = _obj.val();
-    return _obj;
-    //await firebase.database().ref('/questions/multiplechoices/count').on('value').then(function(snapshot){ return snapshot.val() });
-  }
-
-  async uploadQuestion(newID) {
-    await firebase.database().ref('questions/multiplechoices/' + newID).set({
+    firebase.database().ref('questions/multiplechoices/').push({
       question: this.state.question,
       correctAnswer: this.state.correctAnswer,
       answer1: this.state.answer1,
@@ -99,21 +36,35 @@ class AddQuestion extends Component {
     });
   }
 
-  async updateCount(newID) {
-    await firebase.database().ref('questions/multiplechoices').set({
-      count: newID + 1,
+  addQuestionSingles() {
+    firebase.database().ref('questions/singles/').push({
+      question: this.state.question,
+      correctAnswer: this.state.correctAnswer,
     });
   }
+
+
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
+   
+  }
+
+  checkRadio(e){
+   if (this.state.singles === true){
+     this.setState({singles: false, multiplechoice: true});
+   }else{
+    this.setState({singles: true, multiplechoice: false});
+   }
   }
 
 
   showMultipleChoice() {
+  if (this.state.multiplechoice){
     return (
+<Card className="formulario question2">
       <Form>
         <Form.Group>
           <Form.Label>Question</Form.Label>
@@ -137,40 +88,58 @@ class AddQuestion extends Component {
             </Form.Control>
           </Form.Group>
         </Form.Group>
-        <Button variant="warning" onClick={() => this.addQuestion()} > Add Multiple Choice</Button>
-      </Form>
-
+        <Button variant="warning" onClick={() => this.addQuestionMC()} > Add Multiple Choice</Button>
+      </Form></Card>
     );
+  }
   }
 
   showSingles() {
-    return (
-      <Form>
-        <Form.Group>
-          <Form.Label>Question</Form.Label>
-          <Form.Control type="text" placeholder="Enter question" name="question" onChange={e => this.handleChange(e)} />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Possible Answers</Form.Label>
-          <Form.Control type="text" placeholder="Enter answer" name="correctAnswer" onChange={e => this.handleChange(e)} />
-        </Form.Group>
-        <Button variant="warning" onClick={() => this.addQuestionSingles()} > Add </Button>
-      </Form>
-
-    );
+    if (this.state.singles){
+      return (
+        <Card className="formulario question">
+        <Form>
+          <Form.Group>
+            <Form.Label>Question</Form.Label>
+            <Form.Control type="text" placeholder="Enter question" name="question" onChange={e => this.handleChange(e)} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Possible Answers</Form.Label>
+            <Form.Control type="text" placeholder="Enter answer" name="correctAnswer" onChange={e => this.handleChange(e)} />
+          </Form.Group>
+          <Button variant="warning" onClick={() => this.addQuestionSingles()} > Add </Button>
+        </Form>
+      </Card>
+      );
+    }
   }
 
   render() {
     return (
       <div className="AddQuestion">
 
-        {/*<Card className="formulario question">
-        {this.showSingles()}      
-    </Card>*/}
+       <div className="radios">
+       <Form.Group controlId="formGroupEmail">
+      <Form.Check inline
+        name="options" 
+        type="radio"
+        label="Multiple Choice"
+        id="multiplechoice"
+        onClick={(e) => this.checkRadio(e)}
+      />  
+      <Form.Check inline 
+        name="options" 
+        type="radio"
+        label="Single Choice"
+        id="singles"
+        onClick={(e) => this.checkRadio(e)}
+      /> 
+      </Form.Group>
+       </div>
 
-        {<Card className="formulario question2">
-          {this.showMultipleChoice()}
-        </Card>}
+        {this.showSingles()}      
+
+        {this.showMultipleChoice()}
 
       </div>
     );

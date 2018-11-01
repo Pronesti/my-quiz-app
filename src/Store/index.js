@@ -21,6 +21,7 @@ const store = createStore({
         correctAnswer: 0,
     },
     game:{
+        questions: [],
         finished:false,
         timesup:false,
     },

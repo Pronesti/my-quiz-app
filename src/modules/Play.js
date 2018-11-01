@@ -6,6 +6,10 @@ import store from '../store';
 
 class Play extends Component {
 
+componentDidMount(){
+
+}
+
 buttonToPlay(){
     return(<Link to="/start"><Button variant="outline-light" size="sm"> Play </Button></Link>)
 }

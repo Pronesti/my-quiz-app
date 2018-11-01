@@ -39,8 +39,8 @@ class MultipleChoice extends Component {
 
 
 
-    fetchInfo() {
-        var selectedQuestion;
+    async fetchInfo() {
+        /* var selectedQuestion;
         const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').child(store.getState().currentQuestion.position);
         dbRefObject.on('value', snap => {
             selectedQuestion = snap.val();
@@ -53,9 +53,9 @@ class MultipleChoice extends Component {
                 s.currentQuestion.answer4 = selectedQuestion.answer4;
                 s.currentQuestion.correctAnswer = selectedQuestion.correctAnswer;
             });
-        });
-    }
-
+        }); */
+        
+            }
 
 
     checkAnswer(e) {
