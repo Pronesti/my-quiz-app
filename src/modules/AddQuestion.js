@@ -26,9 +26,10 @@ class AddQuestion extends Component {
 
 
   addQuestionMC() {
+ ;
     firebase.database().ref('questions/multiplechoices/').push({
       question: this.state.question,
-      correctAnswer: this.state.correctAnswer,
+      correctAnswer: Number(this.state.correctAnswer),
       answer1: this.state.answer1,
       answer2: this.state.answer2,
       answer3: this.state.answer3,

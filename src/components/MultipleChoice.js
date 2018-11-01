@@ -15,6 +15,7 @@ class MultipleChoice extends Component {
             d_3: false,
             d_4: false,
             finished: false,
+            repeated: [],
         }
     }
 
@@ -25,7 +26,7 @@ class MultipleChoice extends Component {
 
     componentDidUpdate() {
         if (this.state.position !== store.getState().currentQuestion.position) {
-            this.fetchInfo();
+            console.log("updating...");
             this.setState({
                 position: store.getState().currentQuestion.position,
                 d_1: false,
@@ -33,17 +34,22 @@ class MultipleChoice extends Component {
                 d_3: false,
                 d_4: false,
             });
+            this.fetchInfo();
         }
-
     }
 
 
+    fetchInfo() {
 
-    async fetchInfo() {
-        /* var selectedQuestion;
-        const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').child(store.getState().currentQuestion.position);
-        dbRefObject.on('value', snap => {
-            selectedQuestion = snap.val();
+        const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').on('value', snap => {
+            let alltheQuestions = snap.val();
+            let keys = Object.keys(alltheQuestions);
+            var selectedQuestion;
+
+            selectedQuestion = alltheQuestions[keys[this.randomMaker(keys.length)]];
+
+            console.log(selectedQuestion);
+
 
             store.update(s => {
                 s.currentQuestion.title = selectedQuestion.question;
@@ -53,11 +59,29 @@ class MultipleChoice extends Component {
                 s.currentQuestion.answer4 = selectedQuestion.answer4;
                 s.currentQuestion.correctAnswer = selectedQuestion.correctAnswer;
             });
-        }); */
-        
+        });
+
+
+    }
+    checkRepeat(number) {
+        const { repeated } = this.state;
+        for (let i = 0; i < repeated.length; i++) {
+            if (number === repeated[i]) {
+                return true;
             }
+        }
+    }
 
-
+    randomMaker(maxlength) {
+        let randomNumber;
+        do {
+            let min = 0;
+            let max = maxlength;
+            randomNumber = Math.floor(min + (Math.random() * (max - min)));
+        } while (this.checkRepeat(randomNumber));
+        this.state.repeated.push(randomNumber);
+        return randomNumber;
+    }
     checkAnswer(e) {
         if (Number(e.target.name) === store.getState().currentQuestion.correctAnswer) {
             store.update(s => s.score.currentScore = s.score.currentScore + 10);

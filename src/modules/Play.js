@@ -10,6 +10,9 @@ componentDidMount(){
 
 }
 
+
+
+
 buttonToPlay(){
     return(<Link to="/start"><Button variant="outline-light" size="sm"> Play </Button></Link>)
 }
