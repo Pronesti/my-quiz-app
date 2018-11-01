@@ -13,9 +13,18 @@ class Finish extends Component {
 
 
   uploadScore(){
-    firebase.database().ref('highscores/' + store.getState().login.username).set(
-    store.getState().score.currentScore
-    );
+    var ref = firebase.database().ref('highscores').child(store.getState().login.username);
+      ref.once('value').then(function(snapshot){
+        store.update(s =>  s.score.highScore = snapshot.val());
+      })
+      
+    if(store.getState().score.currentScore > store.getState().score.highScore){
+      firebase.database().ref('highscores/' + store.getState().login.username).set(
+        store.getState().score.currentScore
+        );
+    }else{
+      alert("Your highest score is: " + store.getState().score.highScore);
+    }
   }
 
   componentWillUnmount(){ //on exit?

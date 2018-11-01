@@ -21,12 +21,10 @@ class MultipleChoice extends Component {
 
     componentDidMount() { //DIDUPDATE = LOOP INFINITO, WILLUPDATE = Maximum update depth exceeded
         this.fetchInfo();
-        console.log(this.state.position);
     }
 
     componentDidUpdate() {
         if (this.state.position !== store.getState().currentQuestion.position) {
-            console.log("updating...");
             this.setState({
                 position: store.getState().currentQuestion.position,
                 d_1: false,
@@ -41,15 +39,12 @@ class MultipleChoice extends Component {
 
     fetchInfo() {
 
-        const dbRefObject = firebase.database().ref().child('questions').child('multiplechoices').on('value', snap => {
+        firebase.database().ref().child('questions').child('multiplechoices').on('value', snap => {
             let alltheQuestions = snap.val();
             let keys = Object.keys(alltheQuestions);
             var selectedQuestion;
 
             selectedQuestion = alltheQuestions[keys[this.randomMaker(keys.length)]];
-
-            console.log(selectedQuestion);
-
 
             store.update(s => {
                 s.currentQuestion.title = selectedQuestion.question;

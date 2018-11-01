@@ -16,16 +16,7 @@ class Start extends Component {
   }
 
 test(){
-  store.update(s => {
-                s.currentQuestion.title = "asd";
-                s.currentQuestion.answer1 = "das";
-                s.currentQuestion.answer2 = "dasd";
-                s.currentQuestion.answer3 = "asd";
-                s.currentQuestion.answer4 = "asdasd";
-                s.currentQuestion.correctAnswer = "asdasd";
-  });
   store.update(s=> (s.currentQuestion.position++));
-  console.log(store.getState());
 }
 
   render() {

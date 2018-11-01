@@ -22,7 +22,6 @@ componentDidMount(){
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      //console.log(JSON.stringify(user));
       store.update(s => {
        s.login.state = true;
        s.login.username = user.displayName;
@@ -34,7 +33,6 @@ componentDidMount(){
       ref.once('value').then(function(snapshot){
         store.update(s =>  s.score.highScore = snapshot.val());
       })
-      console.log(store.getState().score.highScore);
 
     } else {
       // No user is signed in.
