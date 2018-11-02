@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, Card } from 'react-bootstrap';
 import * as firebase from 'firebase';
+import {Redirect} from 'react-router-dom';
+import store from '../store';
 
 class AddQuestion extends Component {
   constructor(props) {
@@ -20,6 +22,13 @@ class AddQuestion extends Component {
   }
 
   componentDidMount() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        
+      } else {
+        store.update(s => s.login.state = false)
+      }
+    });
   }
 
 
@@ -116,6 +125,9 @@ class AddQuestion extends Component {
   }
 
   render() {
+    if (store.getState().login.state === false) {
+      return (<Redirect to="/login" />);
+  }
     return (
       <div className="AddQuestion">
 

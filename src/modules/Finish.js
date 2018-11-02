@@ -4,11 +4,19 @@ import {Link} from 'react-router-dom';
 import store from '../store'
 import Score from '../components/Score';
 import * as firebase from 'firebase';
+import {Redirect} from 'react-router-dom';
 
 class Finish extends Component {
   componentDidMount(){
     store.update(s => s.game.finished = false);
     store.update(s => s.currentQuestion.position = 1);
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        
+      } else {
+        store.update(s => s.login.state = false)
+      }
+    });
   }
 
 
@@ -36,6 +44,9 @@ class Finish extends Component {
   }
 
   render() {
+    if (store.getState().login.state === false) {
+      return (<Redirect to="/login" />);
+    }
     return (
       <div className="Finish">
       {store.getState().game.timesup ? (<p>You are out of time</p>) : ("")}
