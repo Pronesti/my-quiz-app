@@ -29,7 +29,6 @@ One correct answer of four possibles answers.
 // PROYECTO FINAL // 
 
 Cronograma / Piezas Entregables:
---------------------------------------
 
 Documentación de Aplicación:
 Introducción
@@ -50,7 +49,6 @@ Deployar en plataforma Now
 
 
 OPCIONES:
--------------
 
 🤖BOT
 
@@ -70,12 +68,12 @@ Desarrollar el clásico juego Simón Dice (también conocido como Simon Says).
 
 
 Requerimientos / Condiciones:
------------------------------------
-Grupos hasta 3
-Tecnologías a usar (alguna de ellas):
-React + Librería de Store Manager (como pure-store)
-Angular +v2
-VUE + VUEX
-GitHub (con README descriptivo)
-Código Fuente ordenado
-Deploy en Now
+
+* Grupos hasta 3
+* Tecnologías a usar (alguna de ellas):
+* React + Librería de Store Manager (como pure-store)
+* Angular +v2
+* VUE + VUEX
+* GitHub (con README descriptivo)
+* Código Fuente ordenado
+* Deploy en Now
