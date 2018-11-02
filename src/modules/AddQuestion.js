@@ -19,7 +19,6 @@ class AddQuestion extends Component {
       correctAnswer: '',
       singles: true,
       multiplechoice: false,
-      newID: 0,
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //import dependencies
-import {Row, Col, Container, Button} from 'react-bootstrap';
+import {Row, Col, Container} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 
 //import data managment
@@ -13,17 +13,8 @@ import MultipleChoice from '../components/MultipleChoice';
 import Timer from '../components/Timer';
 import Score from '../components/Score';
 
-
-
-
-
 class Start extends Component {
-
-  componentWillMount(){
-     
-    
-  }
-
+  
   componentDidMount(){
     firebase.auth().onAuthStateChanged(function(user) { //Check if user is logged
       if (user) {

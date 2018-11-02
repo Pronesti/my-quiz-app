@@ -30,7 +30,7 @@ class Scoreboard extends Component {
     if (typeof this.state.arrayScores !=="undefined"){
      return (this.state.arrayScores.map((cell, index) => {
         return(
-        <tr>
+        <tr key={cell.nombre}>
           <td>{index+1}</td>
           <td>{cell.nombre}</td>
           <td>{cell.score}</td>
