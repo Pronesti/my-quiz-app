@@ -17,4 +17,4 @@ One correct answer of four possibles answers.
 - [x] Interactive quiz system
 - [x] Scoreboard with High Scores
 - [x] Google Login
-- [ ] Upload new questions
+- [x] Upload new questions
