@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
+
+//import logo within the folder
 import logo from './logo.svg';
+
+//import dependencies
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import store from '../store';
 
 class Play extends Component {
-
-componentDidMount(){
-
-}
-
-
-
 
 buttonToPlay(){
     return(<Link to="/start"><Button variant="outline-light" size="sm"> Play </Button></Link>)

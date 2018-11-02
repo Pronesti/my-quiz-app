@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+
+//import dependencies
+import {Row, Col, Container, Button} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
+
+//import data managment
+import * as firebase from 'firebase';
+import store from '../store';
+
+//Import components
 import MultipleChoice from '../components/MultipleChoice';
 import Timer from '../components/Timer';
 import Score from '../components/Score';
-import {Row, Col, Container, Button} from 'react-bootstrap';
-import store from '../store';
-import * as firebase from 'firebase';
-import {Redirect} from 'react-router-dom';
+
+
+
+
 
 class Start extends Component {
 
@@ -15,7 +25,7 @@ class Start extends Component {
   }
 
   componentDidMount(){
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function(user) { //Check if user is logged
       if (user) {
         
       } else {
@@ -24,12 +34,8 @@ class Start extends Component {
     });
   }
 
-test(){
-  store.update(s=> (s.currentQuestion.position++));
-}
-
   render() {
-    if (store.getState().login.state === false) {
+    if (store.getState().login.state === false) { // redirects user if he is not logged
       return (<Redirect to="/login" />);
   }
     return (
@@ -52,7 +58,6 @@ test(){
     <Col></Col>
   </Row>
 </Container>
-  <Button onClick={() => this.test()}>+</Button>
       </div>
     );
   }

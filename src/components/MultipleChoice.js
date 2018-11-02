@@ -1,30 +1,32 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import { Button, ButtonGroup, Row, Col, Container } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import store from '../store';
 import * as firebase from 'firebase';
-import { Redirect } from 'react-router-dom';
 
 class MultipleChoice extends Component {
     constructor(props) {
         super(props);
         store.subscribe(() => this.forceUpdate());
         this.state = {
-            position: store.getState().currentQuestion.position,
+            position: store.getState().currentQuestion.position, // number of question to answer
             d_1: false,
             d_2: false,
             d_3: false,
             d_4: false,
             finished: false,
-            repeated: [],
+            repeated: [], //array of already answered questions
         }
     }
 
-    componentDidMount() { //DIDUPDATE = LOOP INFINITO, WILLUPDATE = Maximum update depth exceeded
+    componentDidMount() {
         this.fetchInfo();
     }
 
     componentDidUpdate() {
-        if (this.state.position !== store.getState().currentQuestion.position) {
+        if (this.state.position !== store.getState().currentQuestion.position) { //check new question
             this.setState({
                 position: store.getState().currentQuestion.position,
                 d_1: false,
@@ -55,10 +57,9 @@ class MultipleChoice extends Component {
                 s.currentQuestion.correctAnswer = selectedQuestion.correctAnswer;
             });
         });
-
-
     }
-    checkRepeat(number) {
+
+    checkRepeat(number) { // check if the randomNumber was already answered
         const { repeated } = this.state;
         for (let i = 0; i < repeated.length; i++) {
             if (number === repeated[i]) {
@@ -67,7 +68,7 @@ class MultipleChoice extends Component {
         }
     }
 
-    randomMaker(maxlength) {
+    randomMaker(maxlength) { //makes a random number within the number of questions
         let randomNumber;
         do {
             let min = 0;
@@ -77,11 +78,12 @@ class MultipleChoice extends Component {
         this.state.repeated.push(randomNumber);
         return randomNumber;
     }
-    checkAnswer(e) {
-        if (Number(e.target.name) === store.getState().currentQuestion.correctAnswer) {
+
+    checkAnswer(e) { 
+        if (Number(e.target.name) === store.getState().currentQuestion.correctAnswer) { //correct answer
             store.update(s => s.score.currentScore = s.score.currentScore + 10);
             this.setState({ d_1: true, d_2: true, d_3: true, d_4: true });
-        } else {
+        } else { //wrong answer
             store.update(s => s.score.currentScore = s.score.currentScore - 5);
             switch (e.target.name) {
                 case "1": return this.setState({ d_1: true });
@@ -91,10 +93,10 @@ class MultipleChoice extends Component {
                 default: return console.log("Error");
             }
         }
-        if (store.getState().currentQuestion.position < 5) {
+        if (store.getState().currentQuestion.position < 5) { // checks how many question were answered
             store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
         } else {
-            store.update(s => s.game.finished = true);
+            store.update(s => s.game.finished = true); //finish game
         }
     }
 
@@ -102,7 +104,7 @@ class MultipleChoice extends Component {
         const { title, answer1, answer2, answer3, answer4 } = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
 
-        if (store.getState().game.finished) {
+        if (store.getState().game.finished) { // redirects user if is not logged
             return (<Redirect to="/finish" />);
         }
 

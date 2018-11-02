@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import { Button, Form, Card } from 'react-bootstrap';
-import * as firebase from 'firebase';
 import {Redirect} from 'react-router-dom';
+import * as firebase from 'firebase';
 import store from '../store';
 
 class AddQuestion extends Component {
@@ -22,7 +24,7 @@ class AddQuestion extends Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function(user) { // check if user is logged
       if (user) {
         
       } else {
@@ -31,11 +33,7 @@ class AddQuestion extends Component {
     });
   }
 
-
-
-
   addQuestionMC() {
- ;
     firebase.database().ref('questions/multiplechoices/').push({
       question: this.state.question,
       correctAnswer: Number(this.state.correctAnswer),
@@ -62,7 +60,7 @@ class AddQuestion extends Component {
    
   }
 
-  checkRadio(e){
+  checkRadio(e){ // updates state when radio is clicked
    if (this.state.singles === true){
      this.setState({singles: false, multiplechoice: true});
    }else{
@@ -125,7 +123,7 @@ class AddQuestion extends Component {
   }
 
   render() {
-    if (store.getState().login.state === false) {
+    if (store.getState().login.state === false) { // redirects user if is not logged
       return (<Redirect to="/login" />);
   }
     return (

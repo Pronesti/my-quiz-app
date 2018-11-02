@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+
+// css
 import './App.css';
 
+//import dependencies
 import {BrowserRouter as Router,Switch, Route } from 'react-router-dom';
 import firebase from 'firebase';
-
 import store from './store';
 
+//import modules
 import Play from './modules/Play';
 import Start from './modules/Start';
 import Login from './modules/Login';
@@ -13,6 +16,7 @@ import AddQuestion from './modules/AddQuestion';
 import Finish from './modules/Finish';
 import Scoreboard from './modules/Scoreboard';
 
+//import components
 import MyNavbar from './components/MyNavbar';
 
 
@@ -31,7 +35,7 @@ firebase.initializeApp(config);
 class App extends Component {
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged(function (user) { //updates store with user information
       if (user) {
         store.update({
           login: {

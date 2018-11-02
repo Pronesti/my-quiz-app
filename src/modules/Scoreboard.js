@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import {Table} from 'react-bootstrap';
 import * as firebase from 'firebase';
 

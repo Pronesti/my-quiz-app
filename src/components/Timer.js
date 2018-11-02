@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import  Countdown from 'react-countdown-now';
 import store from '../store';
 
@@ -6,13 +8,9 @@ class Timer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            givenTime: 10000,
+            givenTime: 10000, // time given to answer each question in miliseconds
         }
       }
-
-componentDidMount(){
-
-}
 
 showTimer(){
   // Renderer callback with condition
@@ -32,7 +30,7 @@ return(<Countdown
 />);
 }
 
-noMoreTime(){
+noMoreTime(){ //timer goes 0
   store.update(s => s.game.finished = true);
   store.update(s => s.game.timesup = true);
 }

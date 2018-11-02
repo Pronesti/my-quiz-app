@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import store from '../store';
 
 class MyNavbar extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-    }
-  }
   
   render() {
     return (

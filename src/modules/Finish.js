@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import {Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-import store from '../store'
-import Score from '../components/Score';
+import {Link, Redirect} from 'react-router-dom';
 import * as firebase from 'firebase';
-import {Redirect} from 'react-router-dom';
+import store from '../store'
+
+//import components
+import Score from '../components/Score';
 
 class Finish extends Component {
   componentDidMount(){
-    store.update(s => s.game.finished = false);
-    store.update(s => s.currentQuestion.position = 1);
-    firebase.auth().onAuthStateChanged(function(user) {
+    store.update(s => s.game.finished = false); // resets finish game state
+    store.update(s => s.currentQuestion.position = 1); // prepare for new game
+
+    firebase.auth().onAuthStateChanged(function(user) { //check if user is logged
       if (user) {
         
       } else {
@@ -26,7 +30,7 @@ class Finish extends Component {
         store.update(s =>  s.score.highScore = snapshot.val());
       })
       
-    if(store.getState().score.currentScore > store.getState().score.highScore){
+    if(store.getState().score.currentScore > store.getState().score.highScore){ // checks if new score is better than highscore
       firebase.database().ref('highscores/' + store.getState().login.username).set(
         store.getState().score.currentScore
         );
@@ -35,7 +39,7 @@ class Finish extends Component {
     }
   }
 
-  componentWillUnmount(){ //on exit?
+  componentWillUnmount(){ //on exit resets store
     store.update(s => {
       s.score.currentScore = 0;
       s.currentQuestion.position = 1;
@@ -44,7 +48,7 @@ class Finish extends Component {
   }
 
   render() {
-    if (store.getState().login.state === false) {
+    if (store.getState().login.state === false) { // redirects user if is not logged
       return (<Redirect to="/login" />);
     }
     return (

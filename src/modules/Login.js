@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+//import dependencies
 import { Card,  Button } from 'react-bootstrap';
 import * as firebaseui from 'firebaseui';
 import * as firebase from 'firebase';
@@ -7,39 +9,26 @@ import store from '../store';
 
 
 class Login extends Component {
-constructor(props){
-  super(props);
-  this.state = {
-  }
-}
-
-componentDidUpdate(){
-
-}
 
 componentDidMount(){
-
-
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(function(user) { //Checks if user is logged
     if (user) {
-      store.update(s => {
+      store.update(s => { //store user data in pure-store
        s.login.state = true;
        s.login.username = user.displayName;
        s.login.email = user.email;
        s.login.picture = user.photoURL;
       });
 
-      var ref = firebase.database().ref('highscores').child(store.getState().login.username);
+      var ref = firebase.database().ref('highscores').child(store.getState().login.username); // fetch user highscore in firebase
       ref.once('value').then(function(snapshot){
         store.update(s =>  s.score.highScore = snapshot.val());
       })
 
     } else {
-      // No user is signed in.
-      store.update(s => s.login.state = false);
+      store.update(s => s.login.state = false); // No user is signed in.
     }
   }).bind(this);
-
 
     var uiConfig = {
         callbacks: {
@@ -74,9 +63,6 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 ui.start('#firebaseui-auth-container', uiConfig);
 
 
-
-
-
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
   .then(function() {
     // Existing and future Auth states are now persisted in the current
@@ -89,11 +75,9 @@ ui.start('#firebaseui-auth-container', uiConfig);
   .catch(function(error) {
     // Handle Errors here.
   });
-
-
 }
 
-logOut(){
+logOut(){ 
     firebase.auth().signOut().then(function() {
 
       }).catch(function(error) {

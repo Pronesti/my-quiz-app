@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import store from '../store';
 
+//import dependencies
+import store from '../store';
 
 class Score extends Component {
     constructor(props){
@@ -8,11 +9,6 @@ class Score extends Component {
         this.state = {
         }
       }
-
-componentDidMount(){
-
-}
-
 
   render() {
     return (
