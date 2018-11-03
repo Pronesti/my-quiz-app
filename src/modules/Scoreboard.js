@@ -28,14 +28,12 @@ class Scoreboard extends Component {
   
   makeCell(){
     if (typeof this.state.arrayScores !=="undefined"){
-     return (this.state.arrayScores.map((cell, index) => {
-        return(
+     return (this.state.arrayScores.map((cell, index) => (
         <tr key={cell.nombre}>
           <td>{index+1}</td>
           <td>{cell.nombre}</td>
           <td>{cell.score}</td>
-        </tr>)
-        }))
+        </tr>)))
     }  
   }
 

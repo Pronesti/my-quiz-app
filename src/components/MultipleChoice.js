@@ -100,10 +100,24 @@ class MultipleChoice extends Component {
         }
     }
 
-    render() {
-        const { title, answer1, answer2, answer3, answer4 } = store.getState().currentQuestion;
+    makeButtons(){
+        const {answer1, answer2, answer3, answer4} = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
 
+        if(answer1){
+            return(
+                            <ButtonGroup vertical>
+                                    <Button name="1" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_1}>{answer1}</Button>
+                                    <Button name="2" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_2}>{answer2}</Button>
+                                    <Button name="3" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_3}>{answer3}</Button>
+                                    <Button name="4" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_4}>{answer4}</Button>
+                             </ButtonGroup>)
+        }
+    }
+
+    render() {
+        const {title} = store.getState().currentQuestion;
+        
         if (store.getState().game.finished) { // redirects user if is not logged
             return (<Redirect to="/finish" />);
         }
@@ -123,12 +137,8 @@ class MultipleChoice extends Component {
                     <Row>
                         <Col></Col>
                         <Col>
-                            <ButtonGroup vertical>
-                                <Button name="1" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_1}>{answer1}</Button>
-                                <Button name="2" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_2}>{answer2}</Button>
-                                <Button name="3" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_3}>{answer3}</Button>
-                                <Button name="4" variant="outline-light" onClick={(e) => this.checkAnswer(e)} disabled={d_4}>{answer4}</Button>
-                            </ButtonGroup></Col>
+                                {this.makeButtons()}
+                        </Col>
                         <Col></Col>
                     </Row>
                 </Container>

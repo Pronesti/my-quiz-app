@@ -25,6 +25,7 @@ const store = createStore({
         finished:false,
         timesup:false,
     },
+    loading: false,
 })
 
 export default store;
