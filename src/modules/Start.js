@@ -7,8 +7,13 @@ import {Row, Col, Container} from 'react-bootstrap';
 import MultipleChoice from '../components/MultipleChoice';
 import Timer from '../components/Timer';
 import Score from '../components/Score';
+import store from '../store';
 
 class Start extends Component {
+  
+  componentDidMount(){
+    store.update(s => s.score.currentScore = 0);
+  }
 
   render() {
     return (
