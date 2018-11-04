@@ -120,6 +120,7 @@ class Game extends Component {
             } else {
                 store.update(s => s.game.finished = true); //finish game
             }
+            e.target.value = "";
         }
         
     }

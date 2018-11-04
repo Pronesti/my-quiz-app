@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //import dependencies
-import { Button, Form, Card } from 'react-bootstrap';
+import { Button, Form, Card, Modal } from 'react-bootstrap';
 import * as firebase from 'firebase';
 
 class AddQuestion extends Component {
@@ -17,6 +17,7 @@ class AddQuestion extends Component {
       correctAnswer: 1,
       singles: true,
       multiplechoice: false,
+      lgShow: false,
     }
   }
 
@@ -30,6 +31,7 @@ class AddQuestion extends Component {
       answer4: this.state.answer4,
       type: "mc",
     });
+    this.setState({ lgShow: true })
   }
 
   addQuestionSingles() {
@@ -38,6 +40,7 @@ class AddQuestion extends Component {
       correctAnswer: this.state.correctAnswer,
       type: "sg",
     });
+    this.setState({ lgShow: true })
   }
 
 
@@ -138,6 +141,21 @@ class AddQuestion extends Component {
         {this.showSingles()}      
 
         {this.showMultipleChoice()}
+
+
+        <Modal
+          size="sm"
+          show={this.state.lgShow}
+          onHide={() => this.setState({lgShow: false})}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-lg">
+              Success
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Question Uploaded</Modal.Body>
+        </Modal>
 
       </div>
     );
