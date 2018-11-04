@@ -18,24 +18,30 @@ class Start extends Component {
     });
   }
 
+currentPosition(){
+  if(typeof store.getState().currentQuestion.position !=="undefined"){
+    return (<h3>{store.getState().currentQuestion.position}/5</h3>);
+  }
+}
+
   render() {
     return (
       <div className="Start">
         <Container>
   <Row>
     <Col><Timer /></Col>
-    <Col xs={6}></Col>
+    <Col>{this.currentPosition()}</Col>
     <Col><Score /></Col>
   </Row>
   <Row></Row>
   <Row>
     <Col></Col>
-    <Col xs={5}><Game /></Col>
+    <Col><Game /></Col>
     <Col></Col>
   </Row>
   <Row>
     <Col></Col>
-    <Col xs={5}></Col>
+    <Col></Col>
     <Col></Col>
   </Row>
 </Container>
