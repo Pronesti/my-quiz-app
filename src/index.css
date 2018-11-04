@@ -103,3 +103,7 @@ width: 80%;
   border-color: red;
   border-width: 0.2vw;
 }
+
+.inputWidth{
+  width: 50vh;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //import dependencies
-import { Button, ButtonGroup, Row, Col, Container, Form } from 'react-bootstrap';
+import { Button, ButtonGroup, Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import store from '../store';
 import * as firebase from 'firebase';
@@ -124,6 +124,15 @@ class Game extends Component {
         
     }
 
+    skipQuestion(){
+        store.update(s => s.score.currentScore = s.score.currentScore - 5);
+        if (store.getState().currentQuestion.position < 5) { // checks how many question were answered
+            store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
+        } else {
+            store.update(s => s.game.finished = true); //finish game
+        }
+    }
+
     makeButtons(){
         const {answer1, answer2, answer3, answer4, title} = store.getState().currentQuestion;
         const { d_1, d_2, d_3, d_4 } = this.state;
@@ -140,7 +149,15 @@ class Game extends Component {
             if(title){
                return( 
                <div>
-                   <Form.Control type="text" onChange={(e) => this.checkSingle(e)} />
+                       <InputGroup size="lg" className="inputWidth">
+                           <FormControl
+                           type="text" onChange={(e) => this.checkSingle(e)}
+                           />
+                           <InputGroup.Append>
+                               <Button variant="danger" name="Pass" onClick={() => this.skipQuestion()}>Skip</Button>
+                           </InputGroup.Append>
+                       </InputGroup>
+                
                </div>)
             }
         }
