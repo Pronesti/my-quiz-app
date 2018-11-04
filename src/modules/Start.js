@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 
 //import dependencies
 import {Row, Col, Container} from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
-
-//import data managment
-import * as firebase from 'firebase';
-import store from '../store';
 
 //Import components
 import MultipleChoice from '../components/MultipleChoice';

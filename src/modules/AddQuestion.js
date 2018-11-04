@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 //import dependencies
 import { Button, Form, Card } from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
 import * as firebase from 'firebase';
-import store from '../store';
 
 class AddQuestion extends Component {
   constructor(props) {
@@ -16,7 +14,7 @@ class AddQuestion extends Component {
       answer2: '',
       answer3: '',
       answer4: '',
-      correctAnswer: '',
+      correctAnswer: 1,
       singles: true,
       multiplechoice: false,
     }
@@ -78,7 +76,7 @@ class AddQuestion extends Component {
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Label>Right Answer</Form.Label>
             <Form.Control as="select" name="correctAnswer" onChange={e => this.handleChange(e)}>
-              <option>1</option>
+              <option selected="selected">1</option>
               <option>2</option>
               <option>3</option>
               <option>4</option>
@@ -129,6 +127,7 @@ class AddQuestion extends Component {
         type="radio"
         label="Single Choice"
         id="singles"
+        defaultChecked
         onClick={(e) => this.checkRadio(e)}
       /> 
       </Form.Group>

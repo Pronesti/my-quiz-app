@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 //import dependencies
 import {Button} from 'react-bootstrap';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import * as firebase from 'firebase';
 import store from '../store'
 
