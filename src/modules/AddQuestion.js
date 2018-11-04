@@ -22,16 +22,6 @@ class AddQuestion extends Component {
     }
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(function(user) { // check if user is logged
-      if (user) {
-        
-      } else {
-        store.update(s => s.login.state = false)
-      }
-    });
-  }
-
   addQuestionMC() {
     firebase.database().ref('questions/multiplechoices/').push({
       question: this.state.question,
@@ -122,9 +112,6 @@ class AddQuestion extends Component {
   }
 
   render() {
-    if (store.getState().login.state === false) { // redirects user if is not logged
-      return (<Redirect to="/login" />);
-  }
     return (
       <div className="AddQuestion">
 

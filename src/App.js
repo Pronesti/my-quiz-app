@@ -52,6 +52,30 @@ class App extends Component {
     }).bind(this);
   }
 
+  noLogged(){
+    return(
+    <Switch>
+      <Route exact path="/" component={Play}/>
+      <Route exact path="/login" component={Login}/>
+      <Route exact path="/scoreboard" component={Scoreboard}/>
+      <Route component={Login}/>
+  </Switch>
+  );
+  }
+
+  isLogged(){
+    return(
+    <Switch>
+      <Route exact path="/" component={Play}/>
+      <Route exact path="/start" component={Start}/>
+      <Route exact path="/login" component={Login}/>
+      <Route exact path="/add" component={AddQuestion}/>
+      <Route exact path="/finish" component={Finish}/>
+      <Route exact path="/scoreboard" component={Scoreboard}/>
+      <Route component={Play}/>
+    </Switch>)
+  }
+
   render() {
     return (
       <div className="App">
@@ -59,14 +83,7 @@ class App extends Component {
   <div>
 <MyNavbar />
 <div className="center-div">
-<Switch>
-    <Route exact path="/" component={Play}/>
-    <Route exact path="/start" component={Start}/>
-    <Route exact path="/login" component={Login}/>
-    <Route exact path="/add" component={AddQuestion}/>
-    <Route exact path="/finish" component={Finish}/>
-    <Route exact path="/scoreboard" component={Scoreboard}/>
-</Switch>
+{store.getState().login.state ? (this.isLogged()) : (this.noLogged())}
 </div>
 </div>
 </Router>

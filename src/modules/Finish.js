@@ -13,14 +13,6 @@ class Finish extends Component {
   componentDidMount(){
     store.update(s => s.game.finished = false); // resets finish game state
     store.update(s => s.currentQuestion.position = 1); // prepare for new game
-
-    firebase.auth().onAuthStateChanged(function(user) { //check if user is logged
-      if (user) {
-        
-      } else {
-        store.update(s => s.login.state = false)
-      }
-    });
   }
 
 
@@ -48,9 +40,6 @@ class Finish extends Component {
   }
 
   render() {
-    if (store.getState().login.state === false) { // redirects user if is not logged
-      return (<Redirect to="/login" />);
-    }
     return (
       <div className="Finish">
       {store.getState().game.timesup ? (<p>You are out of time</p>) : ("")}

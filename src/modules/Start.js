@@ -14,21 +14,8 @@ import Timer from '../components/Timer';
 import Score from '../components/Score';
 
 class Start extends Component {
-  
-  componentDidMount(){
-    firebase.auth().onAuthStateChanged(function(user) { //Check if user is logged
-      if (user) {
-        
-      } else {
-        store.update(s => s.login.state = false)
-      }
-    });
-  }
 
   render() {
-    if (store.getState().login.state === false) { // redirects user if he is not logged
-      return (<Redirect to="/login" />);
-  }
     return (
       <div className="Start">
         <Container>
