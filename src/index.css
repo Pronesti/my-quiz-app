@@ -95,3 +95,11 @@ width: 80%;
   margin: auto;
   margin-bottom: 10vh;
 }
+
+.yourScore{
+  background-color:green;
+  color:red;
+  border-style: dotted;
+  border-color: red;
+  border-width: 0.2vw;
+}

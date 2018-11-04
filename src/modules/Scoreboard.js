@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //import dependencies
 import {Table} from 'react-bootstrap';
 import * as firebase from 'firebase';
+import store from '../store';
 
 class Scoreboard extends Component {
   constructor(props){
@@ -28,12 +29,21 @@ class Scoreboard extends Component {
   
   makeCell(){
     if (typeof this.state.arrayScores !=="undefined"){
-     return (this.state.arrayScores.map((cell, index) => (
-        <tr key={cell.nombre}>
-          <td>{index+1}</td>
-          <td>{cell.nombre}</td>
-          <td>{cell.score}</td>
-        </tr>)))
+     return (this.state.arrayScores.map((cell, index) => {
+         if (cell.nombre === store.getState().login.username){
+            return(<tr key={cell.nombre} className="yourScore">
+            <td>{index+1}</td>
+            <td>{cell.nombre}</td>
+            <td>{cell.score}</td>
+          </tr>)
+         }else{
+            return(<tr key={cell.nombre}>
+            <td>{index+1}</td>
+            <td>{cell.nombre}</td>
+            <td>{cell.score}</td>
+          </tr>)
+         }
+     }))
     }  
   }
 
