@@ -4,15 +4,18 @@ import React, { Component } from 'react';
 import {Row, Col, Container} from 'react-bootstrap';
 
 //Import components
-import MultipleChoice from '../components/MultipleChoice';
+import Game from '../components/Game';
 import Timer from '../components/Timer';
 import Score from '../components/Score';
 import store from '../store';
 
 class Start extends Component {
-  
+
   componentDidMount(){
-    store.update(s => s.score.currentScore = 0);
+    store.update(s => {
+      s.score.currentScore = 0;
+      s.currentQuestion.position = 1;
+    });
   }
 
   render() {
@@ -27,7 +30,7 @@ class Start extends Component {
   <Row></Row>
   <Row>
     <Col></Col>
-    <Col xs={5}><MultipleChoice /></Col>
+    <Col xs={5}><Game /></Col>
     <Col></Col>
   </Row>
   <Row>

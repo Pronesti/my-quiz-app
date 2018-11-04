@@ -21,20 +21,22 @@ class AddQuestion extends Component {
   }
 
   addQuestionMC() {
-    firebase.database().ref('questions/multiplechoices/').push({
+    firebase.database().ref('questions/').push({
       question: this.state.question,
       correctAnswer: Number(this.state.correctAnswer),
       answer1: this.state.answer1,
       answer2: this.state.answer2,
       answer3: this.state.answer3,
       answer4: this.state.answer4,
+      type: "mc",
     });
   }
 
   addQuestionSingles() {
-    firebase.database().ref('questions/singles/').push({
+    firebase.database().ref('questions/').push({
       question: this.state.question,
       correctAnswer: this.state.correctAnswer,
+      type: "sg",
     });
   }
 
