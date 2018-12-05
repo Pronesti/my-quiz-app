@@ -8,14 +8,12 @@ import Game from '../components/Game';
 import Timer from '../components/Timer';
 import Score from '../components/Score';
 import store from '../store';
+import { resetStore } from '../actions';
 
 class Start extends Component {
 
   componentDidMount(){
-    store.update(s => {
-      s.score.currentScore = 0;
-      s.currentQuestion.position = 1;
-    });
+    resetStore();
   }
 
 currentPosition(){

@@ -6,6 +6,7 @@ import * as firebaseui from 'firebaseui';
 import * as firebase from 'firebase';
 import {Link} from 'react-router-dom';
 import store from '../store';
+import { storeUser, updateHighScore, isLogged } from '../actions';
 
 
 class Login extends Component {
@@ -13,20 +14,16 @@ class Login extends Component {
 componentDidMount(){
   firebase.auth().onAuthStateChanged(function(user) { //Checks if user is logged
     if (user) {
-      store.update(s => { //store user data in pure-store
-       s.login.state = true;
-       s.login.username = user.displayName;
-       s.login.email = user.email;
-       s.login.picture = user.photoURL;
-      });
+      
+      storeUser(user);
 
       var ref = firebase.database().ref('highscores').child(store.getState().login.username); // fetch user highscore in firebase
       ref.once('value').then(function(snapshot){
-        store.update(s =>  s.score.highScore = snapshot.val());
+        updateHighScore(snapshot.val());
       })
 
     } else {
-      store.update(s => s.login.state = false); // No user is signed in.
+      isLogged(false);
     }
   }).bind(this);
 

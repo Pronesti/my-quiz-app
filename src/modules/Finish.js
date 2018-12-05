@@ -8,18 +8,18 @@ import store from '../store'
 
 //import components
 import Score from '../components/Score';
+import { resetGame, updateHighScore } from '../actions';
 
 class Finish extends Component {
   componentDidMount(){
-    store.update(s => s.game.finished = false); // resets finish game state
-    store.update(s => s.currentQuestion.position = 1); // prepare for new game
+    resetGame();
   }
 
 
   uploadScore(){
     var ref = firebase.database().ref('highscores').child(store.getState().login.username);
       ref.once('value').then(function(snapshot){
-        store.update(s =>  s.score.highScore = snapshot.val());
+       updateHighScore(snapshot.val());
       })
       
     if(store.getState().score.currentScore > store.getState().score.highScore){ // checks if new score is better than highscore
@@ -32,11 +32,7 @@ class Finish extends Component {
   }
 
   componentWillUnmount(){ //on exit resets store
-    store.update(s => {
-      s.score.currentScore = 0;
-      s.currentQuestion.position = 1;
-      s.game.timesup = false;
-    })
+    
   }
 
   render() {

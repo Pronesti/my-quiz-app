@@ -5,6 +5,7 @@ import { Button, ButtonGroup, Row, Col, Container, InputGroup, FormControl} from
 import { Redirect } from 'react-router-dom';
 import store from '../store';
 import * as firebase from 'firebase';
+import { updateScore, nextQuestion, finishGame, isFinished } from '../actions';
 
 class Game extends Component {
     constructor(props) {
@@ -93,10 +94,10 @@ class Game extends Component {
 
     checkAnswer(e) { 
         if (Number(e.target.name) === store.getState().currentQuestion.correctAnswer) { //correct answer
-            store.update(s => s.score.currentScore = s.score.currentScore + 10);
+            updateScore(10);
             this.setState({ d_1: true, d_2: true, d_3: true, d_4: true });
         } else { //wrong answer
-            store.update(s => s.score.currentScore = s.score.currentScore - 5);
+            updateScore(-5);
             switch (e.target.name) {
                 case "1": return this.setState({ d_1: true });
                 case "2": return this.setState({ d_2: true });
@@ -105,20 +106,20 @@ class Game extends Component {
                 default: return console.log("Error");
             }
         }
-        if (store.getState().currentQuestion.position < 5) { // checks how many question were answered
-            store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
+        if (isFinished()) { // checks how many question were answered
+            nextQuestion();
         } else {
-            store.update(s => s.game.finished = true); //finish game
+            finishGame();
         }
     }
 
     checkSingle(e){
         if (e.target.value === store.getState().currentQuestion.correctAnswer) { //correct answer
-            store.update(s => s.score.currentScore = s.score.currentScore + 10);
-            if (store.getState().currentQuestion.position < 5) { // checks how many question were answered
-                store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
+            updateScore(10);
+            if (isFinished()) { // checks how many question were answered
+               nextQuestion();
             } else {
-                store.update(s => s.game.finished = true); //finish game
+                finishGame();
             }
             e.target.value = "";
         }
@@ -126,11 +127,11 @@ class Game extends Component {
     }
 
     skipQuestion(){
-        store.update(s => s.score.currentScore = s.score.currentScore - 5);
-        if (store.getState().currentQuestion.position < 5) { // checks how many question were answered
-            store.update(s => s.currentQuestion.position = s.currentQuestion.position + 1);
+        updateScore(-5);
+        if (isFinished()) { // checks how many question were answered
+            nextQuestion();
         } else {
-            store.update(s => s.game.finished = true); //finish game
+            finishGame();
         }
     }
 
